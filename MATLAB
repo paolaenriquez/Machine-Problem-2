@@ -1,0 +1,28 @@
+pers = input('Enter 1st point as a vector: ');
+secnd = input('Enter 2nd point as a vector: ');
+terd = input('Enter 3rd point as a vector: ');
+matrixA = [[pers(1),pers(2),1];[secnd(1),secnd(2),1];[terd(1),terd(2),1]];
+squaresB = -[pers(1)^2+pers(2)^2;secnd(1)^2+secnd(2)^2;terd(1)^2+terd(2)^2];
+determinant = det(matrixA);
+bilog = round(determinant);
+if bilog==0
+    disp("The points are collinear, therefore circle does not exist");
+else
+    matA1 = [squaresB, matrixA(:,2:3)];
+    matA2 = [matrixA(:,1),squaresB,matrixA(:,3)];
+    matA3 = [matrixA(:,1:2),squaresB];
+    D = det(matA1)/det(matrixA);
+    E = det(matA2)/det(matrixA);
+    F = det(matA3)/det(matrixA);
+    vector = [D, E, F];
+    kumpletoTheParisukat = -(vector./2);
+    h = kumpletoTheParisukat(1);
+    k = kumpletoTheParisukat(2);
+    r = sqrt(-F + h^2 + k^2);
+    disp('vector [D,E,F]: ');
+    disp(vector)
+    disp('center: ');
+    fprintf(" %.f ",h)
+    fprintf(", %.f ",k)
+    fprintf('\nradius: %.f ',r);
+end
