@@ -1,57 +1,52 @@
-#Program that accepts 3 points (x,y) lying on a circle in a 2-dimensional Cartesian plan
-#It returns the following parameters: center(h,k), radius(r), and vector[D,E,F]
+#A program that accepts as input points lying on a circle in a 2-dimentsional Cartesian plane. 
+#It returns the following parameters: center(h,k), radius r, and vecyor[D,E,F],
+#where D,E, and F are the coefficients in the general equation of a circle x^2 + y^2 + Dx + Ey + F = 0 
 
-#To math equations from math import<fnuction>
+#To math equations from math import<fnuciton>
 #To access numpy library
-#To import matplotlib.pyplot library
 from math import*
 import numpy as np
 
-#Input values for 3 points
-ax = int(input('Enter x for point 1: '))
-ay = int(input('Enter y for point 1: '))
-bx = int(input('Enter x for point 2: '))
-by = int(input('Enter y for point 2: '))
-cx = int(input('Enter x for point 3: '))
-cy = int(input('Enter y for point 3: '))
+#Input Three Points
+a1 = int(input('Enter x for point 1: '))
+a2 = int(input('Enter y for point 1: '))
+b1 = int(input('Enter x for point 2: '))
+b2 = int(input('Enter y for point 2: '))
+c1 = int(input('Enter x for point 3: '))
+c2 = int(input('Enter y for point 3: '))
 
-#The given 3 points are:
+print('\n')
+
+#Therefore the 3 points are:
 print('The Circle Passes through the points: ','(',ax,',',ay,')','(',bx,',',by,')','(',cx,',',cy,')')
-
+    
 #From the equation: (x - h)^2 + (y - k)^2 = r^2 and x^2 + y^2 + D*x + Ey + F = 0
-abx = ax - bx
-acx = ax - cx
-
-aby = ay - by
-acy = ay - cy
-
-bax = bx - ax
-cax = cx - ax
-
-bay = by - ay
-cay = cy - ay
-
-#For square 
-baxs = (bx**2) - (ax**2)
-bays = (by**2) - (ay**2)
-
-acxs = (ax**2) - (cx**2)
-acys = (ay**2) - (cy**2)
-
-#Solving for D,E, and  F
-D = (acxs * aby + acys * aby + baxs * acy + bays * acy) // (2 * (cax * aby - bax * acy))
-
-E = (acxs * abx + acys * abx + baxs * acx + bays * acx) // (2 * (cay * abx - bay * acx))
-
-F = -(ax**2) - (ay**2) - 2 * D * ax - 2 * E * ay
-
-#Where center is (h = -D and k = -E)
-h = -D
-k = -E
-
-#Getting the radius(r) from the formula (x - h)^2 + (y - k)^2 = r^2
-r = np.sqrt(((ax-h)**2) + ((ay-k)**2))
-
-print('center(',h,',',k,')')
+#The 3 equations from the equation x^2 + y^2 + D*x + Ey + F = 0
+    #ac = ax^2 + ay^2 + D*ax + Eay + F = 0
+    #bc = bx^2 + by^2 + D*bx + Eby + F = 0
+    #cc = cx^2 + cy^2 + D*cx + Ecy + F = 0
+    
+a = a1*a1 + a2*a2
+b = b1*b1 + b2*b2
+c = c1*c1 + c2*c2
+    
+A = np.array([(a1,a2,1),(b1,b2,1),(c1,c2,1)])
+d = np.array([(-a,a2,1),(-b,b2,1),(-c,c2,1)])
+e = np.array([(a1,-a,1),(b1,-b,1),(c1,-c,1)])
+f = np.array([(a1,a2,-a),(b1,b2,-b),(c1,c2,-c)])
+    
+#Getting the D,E, and F using Cramer's Rule
+D = np.linalg.det(d) / np.linalg.det(A)
+E = np.linalg.det(e) / np.linalg.det(A)
+F = np.linalg.det(f) / np.linalg.det(A)
+    
+#Getting center(h.k)
+h = -D/2
+k = -E/2
+    
+#Getting the radius
+r = sqrt(-F + h**2 + k**2)
+    
+print('center(',h,k,')')
 print('r =',r)
-print('Vector[',D,',',E,',',F,']')
+print('Vector[',D,E,F,']')
