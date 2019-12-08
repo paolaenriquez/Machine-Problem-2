@@ -1,0 +1,57 @@
+#Program that accepts 3 points (x,y) lying on a circle in a 2-dimensional Cartesian plan
+#It returns the following parameters: center(h,k), radius(r), and vector[D,E,F]
+
+#To math equations from math import<fnuction>
+#To access numpy library
+#To import matplotlib.pyplot library
+from math import*
+import numpy as np
+
+#Input values for 3 points
+ax = int(input('Enter x for point 1: '))
+ay = int(input('Enter y for point 1: '))
+bx = int(input('Enter x for point 2: '))
+by = int(input('Enter y for point 2: '))
+cx = int(input('Enter x for point 3: '))
+cy = int(input('Enter y for point 3: '))
+
+#The given 3 points are:
+print('The Circle Passes through the points: ','(',ax,',',ay,')','(',bx,',',by,')','(',cx,',',cy,')')
+
+#From the equation: (x - h)^2 + (y - k)^2 = r^2 and x^2 + y^2 + D*x + Ey + F = 0
+abx = ax - bx
+acx = ax - cx
+
+aby = ay - by
+acy = ay - cy
+
+bax = bx - ax
+cax = cx - ax
+
+bay = by - ay
+cay = cy - ay
+
+#For square 
+baxs = (bx**2) - (ax**2)
+bays = (by**2) - (ay**2)
+
+acxs = (ax**2) - (cx**2)
+acys = (ay**2) - (cy**2)
+
+#Solving for D,E, and  F
+D = (acxs * aby + acys * aby + baxs * acy + bays * acy) // (2 * (cax * aby - bax * acy))
+
+E = (acxs * abx + acys * abx + baxs * acx + bays * acx) // (2 * (cay * abx - bay * acx))
+
+F = -(ax**2) - (ay**2) - 2 * D * ax - 2 * E * ay
+
+#Where center is (h = -D and k = -E)
+h = -D
+k = -E
+
+#Getting the radius(r) from the formula (x - h)^2 + (y - k)^2 = r^2
+r = np.sqrt(((ax-h)**2) + ((ay-k)**2))
+
+print('center(',h,',',k,')')
+print('r =',r)
+print('Vector[',D,',',E,',',F,']')
